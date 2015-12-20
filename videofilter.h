@@ -15,7 +15,7 @@
 #include <opencv2/contrib/contrib.hpp>
 #include <opencv2/objdetect/objdetect.hpp>
 #include <QThread>
-//#include <videoanalyzer.h>
+#include <videoanalyzer.h>
 
 
 class VideoFilter : public QAbstractVideoFilter
@@ -81,7 +81,7 @@ private:
     /**
      * @brief Object which contains methods that should be runned in another thread
      */
-    // VideoAnalyzer *worker;
+    VideoAnalyzer *worker;
 
     // void deleteColorComponentFromYUV(QVideoFrame *input);
 };

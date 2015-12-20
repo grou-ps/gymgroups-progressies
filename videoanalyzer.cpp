@@ -52,9 +52,9 @@ void VideoAnalyzer::doWork()
         }
 
         // This will stupidly wait 1 sec doing nothing...
-        QEventLoop loop;
-        QTimer::singleShot(1000, &loop, SLOT(quit()));
-        loop.exec();
+        //QEventLoop loop;
+        //QTimer::singleShot(1000, &loop, SLOT(quit()));
+        //loop.exec();
 
 
         if(false) {

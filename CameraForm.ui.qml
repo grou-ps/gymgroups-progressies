@@ -9,9 +9,9 @@ Item {
     anchors.fill:parent
 
     //property double gaussianBlurCoefValue: 1.5 // 1.5
-      //  property int gaussianBlurSizeValue: 7 // 7
+      // property int gaussianBlurSizeValue: 7 // 7
        // property double cannyThresholdValue: 0.0
-       // property int cannyKernelSizeValue: 3 //3
+        //property int cannyKernelSizeValue: 3 //3
 
 
     MouseArea {

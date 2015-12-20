@@ -14,7 +14,6 @@
 #include <opencv2/objdetect/objdetect.hpp>
 
 #include <QThread>
-#include <QDebug>
 
 using namespace cv;
 
@@ -73,11 +72,12 @@ FilterRunnable::FilterRunnable(VideoFilter *filter) :
     std::string fn_haar = "/usr/local/share/OpenCV/haarcascades/haarcascade_frontalface_default.xml";
     this->haar_cascade.load(fn_haar);
 
-    /*thread = new QThread();
+
+    thread = new QThread();
     worker = new VideoAnalyzer();
 
     worker->moveToThread(thread);
-*/
+
     //connect(worker, SIGNAL(valueChanged(QString)), ui->label, SLOT(setText(QString)));
     //connect(worker, SIGNAL(workRequested()), thread, SLOT(start()));
     //connect(thread, SIGNAL(started()), worker, SLOT(doWork()));
@@ -86,7 +86,11 @@ FilterRunnable::FilterRunnable(VideoFilter *filter) :
 
 FilterRunnable::~FilterRunnable()
 {
-
+    worker->abort();
+    thread->wait();
+    //qDebug()<<"Deleting thread and worker in Thread "<<this->QObject::thread()->currentThreadId();
+    delete thread;
+    delete worker;
 }
 
 QVideoFrame FilterRunnable::run(QVideoFrame *input, const QVideoSurfaceFormat &surfaceFormat, QVideoFilterRunnable::RunFlags flags)

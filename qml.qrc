@@ -1,7 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
-        <file>MainForm.ui.qml</file>
         <file>Camera.qml</file>
         <file>CameraForm.ui.qml</file>
         <file>passport-template.png</file>

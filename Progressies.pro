@@ -11,10 +11,10 @@ LIBS += -L/usr/local/lib -lopencv_core -lopencv_highgui -lopencv_calib3d -lopenc
 CONFIG += c++11
 
 HEADERS += \
-    videofilter.h
-    # videoanalyzer.h
+    videofilter.h \
+    videoanalyzer.h
 
-SOURCES += main.cpp videofilter.cpp # videoanalyzer.cpp
+SOURCES += main.cpp videofilter.cpp videoanalyzer.cpp
 
 RESOURCES += qml.qrc
 
