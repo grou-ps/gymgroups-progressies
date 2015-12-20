@@ -17,6 +17,10 @@
 #include <QThread>
 #include <videoanalyzer.h>
 
+#include <QQmlEngine>
+#include <QJSEngine>
+
+
 
 class VideoFilter : public QAbstractVideoFilter
 {
@@ -27,7 +31,7 @@ class VideoFilter : public QAbstractVideoFilter
     Q_PROPERTY(int cannyKernelSize READ cannyKernelSize WRITE setCannyKernelSize NOTIFY cannyKernelSizeChanged)
     Q_PROPERTY(double cannyThreshold READ cannyThreshold WRITE setCannyThreshold  NOTIFY cannyThresholdChanged)
 */
-
+    Q_PROPERTY(bool photoChangeable READ photoChangeable WRITE setPhotoChangeable NOTIFY photoChangeableChanged)
 public:
     QVideoFilterRunnable *createFilterRunnable() Q_DECL_OVERRIDE;
 
@@ -44,7 +48,13 @@ public:
     int cannyKernelSize() const;
     void setCannyKernelSize(int cannyKernelSize);
 */
+    bool photoChangeable() const;
+    void setPhotoChangeable(bool mode);
+
 private:
+    bool m_photoChangeable;
+
+
     /*
     int m_gaussianBlurSize;
     double m_gaussianBlurCoef;
@@ -57,13 +67,19 @@ signals:
     //void gaussianBlurCoefChanged();
     //void cannyKernelSizeChanged();
     //void cannyThresholdChanged();
+    void photoChangeableChanged();
+
+public slots:
+    void allowPhoto();
+    void disallowPhoto();
+
 };
+
 
 
 
 class FilterRunnable : public QVideoFilterRunnable
 {
-
 public:
     FilterRunnable(VideoFilter *filter);
     ~FilterRunnable();
@@ -72,7 +88,7 @@ public:
 
 private:
     VideoFilter *m_filter;
-    cv::CascadeClassifier haar_cascade;
+
 
     /**
      * @brief Thread object which will let us manipulate the running thread
@@ -84,6 +100,7 @@ private:
     VideoAnalyzer *worker;
 
     // void deleteColorComponentFromYUV(QVideoFrame *input);
+
 };
 
 #endif // VIDEOFILTER

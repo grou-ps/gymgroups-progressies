@@ -15,12 +15,15 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
 
     qmlRegisterType<VideoFilter>("com.calibration.opencv", 1, 0, "VideoFilter");
+    //qmlRegisterSingletonType<VideoFilter>("com.calibration.opencv", 1, 0, "VideoFilter",videofilter_singletontype_provider);
 
     QQmlApplicationEngine engine;
 
 
 
     QQmlContext *context = engine.rootContext();
+
+    // QObject::connect(filter, cannyThresholdChanged, context,doSomething, Qt::DirectConnection);
 
     QRect geometry = QGuiApplication::primaryScreen()->availableGeometry();
     context->setContextProperty( "screenHeight", geometry.height());

@@ -18,9 +18,35 @@
 using namespace cv;
 
 
+
 QVideoFilterRunnable *VideoFilter::createFilterRunnable()
 {
-    return new FilterRunnable(this);
+    FilterRunnable *n = new FilterRunnable(this);
+    //int m = *n;
+    // qDebug() << "filter runnable address is: " << &n;
+    // qDebug() << "filter runnable address is: " << n;
+    // qDebug() << "filter runnable address is: " << &n;
+    //qDebug() << context.contextProperty("gaussianBlurSizeValue");
+    return n;
+}
+
+
+
+
+void VideoFilter::allowPhoto() {
+    setPhotoChangeable(true);
+}
+
+void VideoFilter::disallowPhoto() {
+    setPhotoChangeable(false);
+}
+
+bool VideoFilter::photoChangeable() const {
+    return m_photoChangeable;
+}
+
+void VideoFilter::setPhotoChangeable(bool mode) {
+    m_photoChangeable = mode;
 }
 
 /*
@@ -66,11 +92,12 @@ void VideoFilter::setCannyKernelSize(int cannyKernelSize)
 }
 */
 
+
+
 FilterRunnable::FilterRunnable(VideoFilter *filter) :
     m_filter(filter)
 {
-    std::string fn_haar = "/usr/local/share/OpenCV/haarcascades/haarcascade_frontalface_default.xml";
-    this->haar_cascade.load(fn_haar);
+
 
 
     thread = new QThread();
@@ -78,10 +105,14 @@ FilterRunnable::FilterRunnable(VideoFilter *filter) :
 
     worker->moveToThread(thread);
 
+    qDebug() << "FilterRunnable called";
+
     //connect(worker, SIGNAL(valueChanged(QString)), ui->label, SLOT(setText(QString)));
-    //connect(worker, SIGNAL(workRequested()), thread, SLOT(start()));
-    //connect(thread, SIGNAL(started()), worker, SLOT(doWork()));
-    //connect(worker, SIGNAL(finished()), thread, SLOT(quit()), Qt::DirectConnection);
+    QObject::connect(worker, SIGNAL(sceneAdded()), thread, SLOT(start()));
+    QObject::connect(thread, SIGNAL(started()), worker, SLOT(doWork()));
+    QObject::connect(worker, SIGNAL(finished()), thread, SLOT(quit()), Qt::DirectConnection);
+    QObject::connect(worker, SIGNAL(pose_correct()), filter, SLOT(allowPhoto()), Qt::DirectConnection);
+    QObject::connect(worker, SIGNAL(pose_incorrect()), filter, SLOT(disallowPhoto()), Qt::DirectConnection);
 }
 
 FilterRunnable::~FilterRunnable()
@@ -109,7 +140,7 @@ QVideoFrame FilterRunnable::run(QVideoFrame *input, const QVideoSurfaceFormat &s
     //Ptr<FaceRecognizer> model = createFisherFaceRecognizer();
     //model->train(images, labels);
 
-    vector< Rect_<int> > faces;
+
 
 
     if (!input->isValid())
@@ -121,11 +152,11 @@ QVideoFrame FilterRunnable::run(QVideoFrame *input, const QVideoSurfaceFormat &s
 
     cv::Mat mat(input->height(),input->width(), CV_8U, input->bits());
 
+    worker->setScene(mat);
 
 
-    this->haar_cascade.detectMultiScale(mat, faces);
-
-    qDebug() << "Face is: " << faces[0].x << faces[0].width << faces[0].y << faces[0].height;
+    // this->haar_cascade.detectMultiScale(mat, faces);
+    //qDebug() << "Face is: " << faces[0].x << faces[0].width << faces[0].y << faces[0].height;
 
     /*
 
