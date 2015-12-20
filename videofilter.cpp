@@ -113,7 +113,7 @@ QVideoFrame FilterRunnable::run(QVideoFrame *input, const QVideoSurfaceFormat &s
 
     input->map(QAbstractVideoBuffer::ReadWrite);
 
-    this->deleteColorComponentFromYUV(input);
+    //this->deleteColorComponentFromYUV(input);
 
     cv::Mat mat(input->height(),input->width(), CV_8U, input->bits());
 
@@ -184,7 +184,7 @@ QVideoFrame FilterRunnable::run(QVideoFrame *input, const QVideoSurfaceFormat &s
 
 }
 
-
+/*
 void FilterRunnable::deleteColorComponentFromYUV(QVideoFrame *input)
 {
     // Assign 0 to Us and Vs
@@ -196,3 +196,4 @@ void FilterRunnable::deleteColorComponentFromYUV(QVideoFrame *input)
         inputBits[i] = 127;
 }
 
+*/
