@@ -25,48 +25,18 @@
 class VideoFilter : public QAbstractVideoFilter
 {
     Q_OBJECT
-/*
-    Q_PROPERTY(int gaussianBlurSize READ gaussianBlurSize WRITE setGaussianBlurSize NOTIFY gaussianBlurSizeChanged)
-    Q_PROPERTY(double gaussianBlurCoef READ gaussianBlurCoef WRITE setGaussianBlurCoef  NOTIFY gaussianBlurCoefChanged)
-    Q_PROPERTY(int cannyKernelSize READ cannyKernelSize WRITE setCannyKernelSize NOTIFY cannyKernelSizeChanged)
-    Q_PROPERTY(double cannyThreshold READ cannyThreshold WRITE setCannyThreshold  NOTIFY cannyThresholdChanged)
-*/
+
     Q_PROPERTY(bool photoChangeable READ photoChangeable WRITE setPhotoChangeable NOTIFY photoChangeableChanged)
 public:
     QVideoFilterRunnable *createFilterRunnable() Q_DECL_OVERRIDE;
 
-/*
-    int gaussianBlurSize() const;
-    void setGaussianBlurSize(int gaussianBlurSize);
-
-    double gaussianBlurCoef() const;
-    void setGaussianBlurCoef(double gaussianBlurCoef);
-
-    double cannyThreshold() const;
-    void setCannyThreshold(double cannyThreshold);
-
-    int cannyKernelSize() const;
-    void setCannyKernelSize(int cannyKernelSize);
-*/
     bool photoChangeable() const;
     void setPhotoChangeable(bool mode);
 
 private:
     bool m_photoChangeable;
 
-
-    /*
-    int m_gaussianBlurSize;
-    double m_gaussianBlurCoef;
-
-    int m_cannyKernelSize;
-    double m_cannyThreshold;
-*/
 signals:
-    //void gaussianBlurSizeChanged();
-    //void gaussianBlurCoefChanged();
-    //void cannyKernelSizeChanged();
-    //void cannyThresholdChanged();
     void photoChangeableChanged();
 
 public slots:

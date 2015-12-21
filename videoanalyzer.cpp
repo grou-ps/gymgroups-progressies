@@ -44,22 +44,19 @@ void VideoAnalyzer::setScene(cv::Mat scene) {
 }
 
 void VideoAnalyzer::finish() {
-    // Set _working to false, meaning the process can't be aborted anymore.
+
     mutex.lock();
     _working = false;
     mutex.unlock();
 
     qDebug()<<"Worker process finished in Thread "<<thread()->currentThreadId();
 
-    //Once 60 sec passed, the finished signal is sent
     emit finished();
 }
 
 void VideoAnalyzer::doWork()
 {
     qDebug()<<"Starting worker process in Thread "<<thread()->currentThreadId();
-
-
         // Checks if the process should be aborted
         mutex.lock();
         bool abort = _abort;
@@ -67,15 +64,8 @@ void VideoAnalyzer::doWork()
 
         if (abort) {
             qDebug()<<"Aborting worker process in Thread "<<thread()->currentThreadId();
-            //break;
             finish();
         }
-
-        // This will stupidly wait 1 sec doing nothing...
-        //QEventLoop loop;
-        //QTimer::singleShot(1000, &loop, SLOT(quit()));
-        //loop.exec();
-
         cv::vector< cv::Rect_<int> > faces;
         this->haar_cascade.detectMultiScale(_scene, faces);
          qDebug() << "Face is: " << faces[0].x << faces[0].width << faces[0].y << faces[0].height;

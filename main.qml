@@ -9,9 +9,6 @@ Window {
 
     CameraForm {
         anchors.fill: parent
-        /*mouseArea.onClicked: {
-            Qt.quit();
-        }*/
     }
 }
 

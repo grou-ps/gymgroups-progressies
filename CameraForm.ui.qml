@@ -9,10 +9,6 @@ Item {
     anchors.fill:parent
 
     property bool photoChangeableValue: false
-    //property double gaussianBlurCoefValue: 1.5 // 1.5
-       //property int gaussianBlurSizeValue: 7 // 7
-       // property double cannyThresholdValue: 0.0
-        //property int cannyKernelSizeValue: 3 //3
 
 
     MouseArea {
@@ -50,10 +46,6 @@ Item {
     VideoFilter{
             id: videoFilter
             photoChangeable: photoChangeableValue
-            //gaussianBlurCoef: gaussianBlurCoefValue
-            //gaussianBlurSize: gaussianBlurSizeValue
-            //cannyThreshold: cannyThresholdValue
-            //cannyKernelSize: cannyKernelSizeValue
         }
 
     Image {
@@ -78,17 +70,17 @@ Item {
     }
 
     Timer {
-            interval: 500; triggeredOnStart:true; running: true; repeat: true
+            interval: 500;
+            triggeredOnStart:true;
+            running: true; repeat: true
             onTriggered: checkForTargetColor() //
         }
 
 
     function checkForTargetColor() {
-        //console.log("yes triggered")
-        console.log(videoFilter.photoChangeable)
-        //console.log(photoChangeableValue)
-    if(videoFilter.photoChangeable)
-        targetx.border.color="blue" ;
-    else targetx.border.color="yellow" ; // targetx.border.color photoChangeableValue = Date().toString()
+        if(videoFilter.photoChangeable)
+            targetx.border.color="blue" ;
+        else
+            targetx.border.color="red" ;
     }
 }
