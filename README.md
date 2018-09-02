@@ -1,1 +1,1 @@
-# gymgroups-progressies
+# Progressies
